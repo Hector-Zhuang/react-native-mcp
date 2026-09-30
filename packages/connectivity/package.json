@@ -1,0 +1,95 @@
+{
+  "name": "@react-native-mcp/connectivity",
+  "version": "0.1.0",
+  "description": "Flashlight, WiFi and Bluetooth tools for React Native MCP.",
+  "license": "MIT",
+  "author": "Hector Zhuang <i@hector.im> (https://github.com/Hector-Zhuang)",
+  "homepage": "https://github.com/Hector-Zhuang/react-native-mcp/tree/main/packages/connectivity#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hector-Zhuang/react-native-mcp.git",
+    "directory": "packages/connectivity"
+  },
+  "bugs": {
+    "url": "https://github.com/Hector-Zhuang/react-native-mcp/issues"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "react-native",
+    "connectivity",
+    "bluetooth",
+    "wifi",
+    "flashlight",
+    "turbomodule"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "main": "./lib/module/index.js",
+  "module": "./lib/module/index.js",
+  "react-native": "./src/index.ts",
+  "types": "./lib/typescript/src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/typescript/src/index.d.ts",
+      "react-native": "./src/index.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "*.podspec",
+    "react-native.config.js",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "bob build",
+    "prepack": "bob build",
+    "clean": "del-cli lib",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "@react-native-mcp/core": "0.1.0",
+    "zod": "^3.25.0 || ^4.0.0"
+  },
+  "devDependencies": {
+    "del-cli": "^7.0.0",
+    "react-native-builder-bob": "^0.43.1"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "dependencies": {
+    "react-native-ble-plx": "^3.5.1",
+    "react-native-wifi-reborn": "^4.13.6"
+  },
+  "codegenConfig": {
+    "name": "ConnectivitySpec",
+    "type": "modules",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.reactnativemcp.connectivity"
+    }
+  }
+}

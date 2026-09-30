@@ -1,0 +1,34 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+lib/
+dist/
+build/
+*.tsbuildinfo
+
+# Test
+coverage/
+
+# CocoaPods
+**/ios/Pods/
+
+# Android
+**/android/.gradle/
+**/android/build/
+**/android/local.properties
+*.keystore
+!debug.keystore
+
+# Env
+.env
+.env.local
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.idea/
+*.swp
+
+# Changeset release artifacts
+.changeset/*.release.json

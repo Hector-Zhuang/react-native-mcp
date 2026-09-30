@@ -1,0 +1,9 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "useDefineForClassFields": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["lib", "node_modules"]
+}

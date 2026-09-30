@@ -1,0 +1,74 @@
+{
+  "name": "@react-native-mcp/core",
+  "version": "0.1.0",
+  "description": "Core MCP runtime for mobile capabilities: tool registry, permission framework and transports for React Native.",
+  "license": "MIT",
+  "author": "Hector Zhuang <i@hector.im> (https://github.com/Hector-Zhuang)",
+  "homepage": "https://github.com/Hector-Zhuang/react-native-mcp/tree/main/packages/core#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hector-Zhuang/react-native-mcp.git",
+    "directory": "packages/core"
+  },
+  "bugs": {
+    "url": "https://github.com/Hector-Zhuang/react-native-mcp/issues"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "react-native",
+    "agent",
+    "permissions"
+  ],
+  "main": "./lib/module/index.js",
+  "module": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/typescript/src/index.d.ts",
+      "react-native": "./src/index.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "bob build",
+    "prepack": "bob build",
+    "clean": "del-cli lib",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "zod": "^3.25.0 || ^4.0.0"
+  },
+  "devDependencies": {
+    "del-cli": "^7.0.0",
+    "react-native-builder-bob": "^0.43.1"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  }
+}

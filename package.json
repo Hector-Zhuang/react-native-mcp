@@ -1,0 +1,69 @@
+{
+  "name": "react-native-mcp",
+  "version": "0.1.0",
+  "private": true,
+  "description": "React Native MCP monorepo — expose native phone capabilities as standard Model Context Protocol tools.",
+  "author": "Hector Zhuang",
+  "license": "MIT",
+  "homepage": "https://github.com/Hector-Zhuang/react-native-mcp#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hector-Zhuang/react-native-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Hector-Zhuang/react-native-mcp/issues"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "react-native",
+    "turbomodule",
+    "agent",
+    "ai",
+    "mobile",
+    "ios",
+    "android"
+  ],
+  "workspaces": [
+    "packages/*",
+    "examples/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --ext .ts,.tsx,.js,.cjs,.mjs",
+    "lint:fix": "eslint . --ext .ts,.tsx,.js,.cjs,.mjs --fix",
+    "format": "prettier --write .",
+    "test": "jest",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "changeset publish"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.3",
+    "@babel/preset-react": "^7.25.0",
+    "@babel/preset-typescript": "^7.25.0",
+    "@changesets/changelog-github": "^0.5.0",
+    "@changesets/cli": "^2.27.10",
+    "@modelcontextprotocol/sdk": "^1.30.1",
+    "@react-native/eslint-config": "0.83.1",
+    "@types/jest": "^29.5.13",
+    "@types/node": "^20.14.0",
+    "@types/react": "^19.2.0",
+    "@types/ws": "^8.18.0",
+    "babel-jest": "^29.7.0",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^9.1.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.3.3",
+    "react": "19.2.0",
+    "react-native": "0.83.1",
+    "typescript": "^5.8.3",
+    "ws": "^8.18.0",
+    "zod": "^3.25.0"
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "name": "@react-native-mcp/clipboard",
+  "version": "0.1.0",
+  "description": "Clipboard MCP tools for React Native: read and write the system clipboard as standard MCP tools.",
+  "license": "MIT",
+  "author": "Hector Zhuang <i@hector.im> (https://github.com/Hector-Zhuang)",
+  "homepage": "https://github.com/Hector-Zhuang/react-native-mcp/tree/main/packages/clipboard#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hector-Zhuang/react-native-mcp.git",
+    "directory": "packages/clipboard"
+  },
+  "bugs": {
+    "url": "https://github.com/Hector-Zhuang/react-native-mcp/issues"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "react-native",
+    "clipboard",
+    "turbomodule"
+  ],
+  "main": "./lib/module/index.js",
+  "module": "./lib/module/index.js",
+  "react-native": "./src/index.ts",
+  "types": "./lib/typescript/src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/typescript/src/index.d.ts",
+      "react-native": "./src/index.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "*.podspec",
+    "README.md",
+    "!**/__tests__",
+    "!ios/build",
+    "!android/build"
+  ],
+  "scripts": {
+    "build": "bob build",
+    "prepack": "bob build",
+    "clean": "del-cli lib",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@react-native-clipboard/clipboard": "^1.16.3"
+  },
+  "peerDependencies": {
+    "@react-native-mcp/core": "0.1.0",
+    "react": "*",
+    "react-native": "*",
+    "zod": "^3.25.0 || ^4.0.0"
+  },
+  "devDependencies": {
+    "del-cli": "^7.0.0",
+    "react-native-builder-bob": "^0.43.1"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  }
+}

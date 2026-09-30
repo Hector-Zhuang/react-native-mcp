@@ -1,0 +1,92 @@
+{
+  "name": "@react-native-mcp/share",
+  "version": "0.1.0",
+  "description": "Share sheet MCP tools for React Native: present the OS share sheet as a standard MCP tool.",
+  "license": "MIT",
+  "author": "Hector Zhuang <i@hector.im> (https://github.com/Hector-Zhuang)",
+  "homepage": "https://github.com/Hector-Zhuang/react-native-mcp/tree/main/packages/share#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hector-Zhuang/react-native-mcp.git",
+    "directory": "packages/share"
+  },
+  "bugs": {
+    "url": "https://github.com/Hector-Zhuang/react-native-mcp/issues"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "react-native",
+    "share",
+    "share-sheet",
+    "turbomodule"
+  ],
+  "main": "./lib/module/index.js",
+  "module": "./lib/module/index.js",
+  "react-native": "./src/index.ts",
+  "types": "./lib/typescript/src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/typescript/src/index.d.ts",
+      "react-native": "./src/index.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "*.podspec",
+    "README.md",
+    "!**/__tests__",
+    "!ios/build",
+    "!android/build"
+  ],
+  "scripts": {
+    "build": "bob build",
+    "prepack": "bob build",
+    "clean": "del-cli lib",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "@react-native-mcp/core": "0.1.0",
+    "react": "*",
+    "react-native": "*",
+    "zod": "^3.25.0 || ^4.0.0"
+  },
+  "devDependencies": {
+    "del-cli": "^7.0.0",
+    "react-native-builder-bob": "^0.43.1"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "codegenConfig": {
+    "name": "ShareSpec",
+    "type": "modules",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.reactnativemcp.share"
+    }
+  }
+}
