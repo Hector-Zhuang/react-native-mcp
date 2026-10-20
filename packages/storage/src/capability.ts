@@ -32,7 +32,14 @@ function createMmkvStorageAdapter(): StorageAdapter {
 }
 
 function serialize(value: unknown): string {
-  const serialized = JSON.stringify(value);
+  let serialized: string | undefined;
+  try {
+    serialized = JSON.stringify(value);
+  } catch (error) {
+    throw ReactNativeMcpError.invalidParams(
+      `Storage data must be JSON serializable: ${error instanceof Error ? error.message : 'unknown error'}`,
+    );
+  }
   if (serialized === undefined) {
     throw ReactNativeMcpError.invalidParams('Storage data must be JSON serializable.');
   }
@@ -58,6 +65,34 @@ export function createStorageCapability(
     inputShape: { key: z.string().min(1), data: z.unknown() },
     handler: async (input) => {
       await adapter.setString(input.key, serialize(input.data));
+      return emptyResult();
+    },
+  });
+  const getStorageMany = defineMobileTool({
+    name: 'storage_get_many',
+    description: 'Read and JSON-decode multiple values from persistent device storage.',
+    inputShape: { keys: z.array(z.string().min(1)).min(1) },
+    annotations: { readOnlyHint: true, idempotentHint: true },
+    handler: async (input) => {
+      const values: Record<string, unknown> = {};
+      for (const key of input.keys) {
+        const value = await adapter.getString(key);
+        values[key] = value === undefined ? null : JSON.parse(value);
+      }
+      return jsonResult({ values });
+    },
+  });
+  const setStorageMany = defineMobileTool({
+    name: 'storage_set_many',
+    description: 'JSON-encode and persist multiple values on the device at once.',
+    inputShape: { entries: z.record(z.unknown()) },
+    handler: async (input) => {
+      const encoded = Object.entries(input.entries).map(
+        ([key, data]) => [key, serialize(data)] as const,
+      );
+      for (const [key, value] of encoded) {
+        await adapter.setString(key, value);
+      }
       return emptyResult();
     },
   });
@@ -94,6 +129,14 @@ export function createStorageCapability(
   return {
     name: 'storage',
     version: '0.1.0',
-    tools: [getStorage, setStorage, removeStorage, clearStorage, getStorageInfo],
+    tools: [
+      getStorage,
+      setStorage,
+      getStorageMany,
+      setStorageMany,
+      removeStorage,
+      clearStorage,
+      getStorageInfo,
+    ],
   };
 }

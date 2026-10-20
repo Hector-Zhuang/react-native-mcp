@@ -56,6 +56,44 @@ describe('storage capability', () => {
     });
   });
 
+  it('reads and writes multiple keys in one call', async () => {
+    const memory = createMemoryStorage();
+    const capability = createStorageCapability(memory.adapter);
+    const setMany = capability.tools.find((tool) => tool.name === 'storage_set_many');
+    const getMany = capability.tools.find((tool) => tool.name === 'storage_get_many');
+
+    await setMany?.handler(
+      {
+        entries: {
+          profile: { name: 'Ada' },
+          flags: [true, 2],
+        },
+      },
+      {},
+    );
+    await expect(getMany?.handler({ keys: ['profile', 'flags', 'missing'] }, {})).resolves.toEqual({
+      kind: 'json',
+      data: {
+        values: {
+          profile: { name: 'Ada' },
+          flags: [true, 2],
+          missing: null,
+        },
+      },
+    });
+  });
+
+  it('rejects non-serializable values in storage_set_many without writing anything', async () => {
+    const memory = createMemoryStorage();
+    const capability = createStorageCapability(memory.adapter);
+    const setMany = capability.tools.find((tool) => tool.name === 'storage_set_many');
+
+    await expect(setMany?.handler({ entries: { ok: 1, bad: 2n } }, {})).rejects.toMatchObject({
+      code: 'INVALID_PARAMS',
+    });
+    expect(memory.values.size).toBe(0);
+  });
+
   it('uses MMKV when no adapter is configured', async () => {
     const capability = createStorageCapability();
     const set = capability.tools.find((tool) => tool.name === 'storage_set');
