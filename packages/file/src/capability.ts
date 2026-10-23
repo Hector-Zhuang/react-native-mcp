@@ -22,6 +22,7 @@ export interface FileAdapters {
     filePath: string;
     digestAlgorithm?: 'md5' | 'sha1' | 'sha256';
   }) => Promise<{ size: number; digest: string }>;
+  fileExists?: (filePath: string) => Promise<boolean>;
 }
 
 function requireAdapter<T>(adapter: T | undefined, name: string): T {
@@ -82,9 +83,19 @@ export function createFileCapability(adapters: FileAdapters = {}): ReactNativeMc
     handler: async (input) =>
       jsonResult(await requireAdapter(adapters.getFileInfo, 'File metadata')(input)),
   });
+  const fileExists = defineMobileTool({
+    name: 'file_exists',
+    description: 'Check whether a local file exists on the device.',
+    inputShape: { filePath: z.string().min(1) },
+    annotations: { readOnlyHint: true, idempotentHint: true },
+    handler: async (input) => {
+      const exists = await requireAdapter(adapters.fileExists, 'File existence')(input.filePath);
+      return jsonResult({ filePath: input.filePath, exists });
+    },
+  });
   return {
     name: 'file',
     version: '0.1.0',
-    tools: [downloadFile, uploadFile, removeFile, getFileInfo],
+    tools: [downloadFile, uploadFile, removeFile, getFileInfo, fileExists],
   };
 }

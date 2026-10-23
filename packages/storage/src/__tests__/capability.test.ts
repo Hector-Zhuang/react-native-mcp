@@ -83,6 +83,29 @@ describe('storage capability', () => {
     });
   });
 
+  it('reports key existence without decoding values', async () => {
+    const memory = createMemoryStorage();
+    const capability = createStorageCapability(memory.adapter);
+    const set = capability.tools.find((tool) => tool.name === 'storage_set');
+    const has = capability.tools.find((tool) => tool.name === 'storage_has');
+    const remove = capability.tools.find((tool) => tool.name === 'storage_remove');
+
+    await set?.handler({ key: 'profile', data: { name: 'Ada' } }, {});
+    await expect(has?.handler({ key: 'profile' }, {})).resolves.toEqual({
+      kind: 'json',
+      data: { key: 'profile', exists: true },
+    });
+    await expect(has?.handler({ key: 'missing' }, {})).resolves.toEqual({
+      kind: 'json',
+      data: { key: 'missing', exists: false },
+    });
+
+    await remove?.handler({ key: 'profile' }, {});
+    await expect(has?.handler({ key: 'profile' }, {})).resolves.toMatchObject({
+      data: { key: 'profile', exists: false },
+    });
+  });
+
   it('rejects non-serializable values in storage_set_many without writing anything', async () => {
     const memory = createMemoryStorage();
     const capability = createStorageCapability(memory.adapter);

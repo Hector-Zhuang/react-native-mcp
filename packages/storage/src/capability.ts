@@ -96,6 +96,16 @@ export function createStorageCapability(
       return emptyResult();
     },
   });
+  const hasStorage = defineMobileTool({
+    name: 'storage_has',
+    description: 'Check whether a key exists in persistent device storage.',
+    inputShape: { key: z.string().min(1) },
+    annotations: { readOnlyHint: true, idempotentHint: true },
+    handler: async (input) => {
+      const value = await adapter.getString(input.key);
+      return jsonResult({ key: input.key, exists: value !== undefined });
+    },
+  });
   const removeStorage = defineMobileTool({
     name: 'storage_remove',
     description: 'Remove one value from persistent device storage.',
@@ -134,6 +144,7 @@ export function createStorageCapability(
       setStorage,
       getStorageMany,
       setStorageMany,
+      hasStorage,
       removeStorage,
       clearStorage,
       getStorageInfo,

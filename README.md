@@ -10,13 +10,13 @@ The project provides the MCP runtime, permission policies, tool contracts and Re
 
 `@react-native-mcp/core` provides only the MCP runtime, permissions, result mapping and transports. Each capability is an independent workspace and npm package:
 
-| Package                          | Factory                        | Main tools                                        |
-| -------------------------------- | ------------------------------ | ------------------------------------------------- |
-| `@react-native-mcp/system`       | `createSystemCapability`       | System/app info, network, brightness, phone calls |
-| `@react-native-mcp/storage`      | `createStorageCapability`      | Read, write, batch read/write, remove, clear and inspect storage |
-| `@react-native-mcp/file`         | `createFileCapability`         | Upload, download, remove and inspect files        |
-| `@react-native-mcp/connectivity` | `createConnectivityCapability` | Flashlight, WiFi, Bluetooth state and BLE scans   |
-| `@react-native-mcp/sms`          | `createSmsCapability`          | Open the native SMS composer                      |
+| Package                          | Factory                        | Main tools                                                                        |
+| -------------------------------- | ------------------------------ | --------------------------------------------------------------------------------- |
+| `@react-native-mcp/system`       | `createSystemCapability`       | System/app info, network, brightness, phone calls                                 |
+| `@react-native-mcp/storage`      | `createStorageCapability`      | Read, write, batch read/write, existence check, remove, clear and inspect storage |
+| `@react-native-mcp/file`         | `createFileCapability`         | Upload, download, remove, inspect and check files                                 |
+| `@react-native-mcp/connectivity` | `createConnectivityCapability` | Flashlight, WiFi, Bluetooth state and BLE scans                                   |
+| `@react-native-mcp/sms`          | `createSmsCapability`          | Open the native SMS composer                                                      |
 
 ### Native Capability Packages
 
